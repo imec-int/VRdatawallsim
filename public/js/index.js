@@ -2,11 +2,9 @@
 $(function() {
    console.log("hello js");
    initSockets();
-
-   var screen1 = document.querySelector("#screen1").components["canvas-material"];
-   var screen2 = document.querySelector("#screen2").components["canvas-material"];
-   var ctx1 = screen1.getContext();
-   var ctx2 = screen2.getContext();
+   screens = [];
+   ctxs = [];
+   initScreens(8,960,150);
 
     // function getRndColor() {
     //     var r = 255*Math.random()|0,
@@ -25,13 +23,21 @@ $(function() {
     //     //this update function says to update the texture in aframe
     //     component.updateTexture();
     // },100)
-    var img=document.getElementById("image")
-    ctx1.drawImage(img, 0,0,960,150,0,0,960,150)
-    screen1.updateTexture();
-    ctx2.drawImage(img, 0,150,960,150,0,0,960,150)
-    screen2.updateTexture();
+    
+
 
 });
+
+function initScreens(number, w, h) {
+    var img=document.getElementById("image")
+    for (var i = number - 1; i >= 0; i--) {
+        screens[i] = document.querySelector("#screen"+i).components["canvas-material"];
+        ctxs[i] = screens[i].getContext();
+        ctxs[i].drawImage(img, 0,150*i,960,150,0,0,960,150)
+        screens[i].updateTexture();
+    }
+    // body...
+}
 
 // SOCKET.IO
 function initSockets(){
