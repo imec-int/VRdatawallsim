@@ -4,7 +4,8 @@ $(function() {
    initSockets();
    screens = [];
    ctxs = [];
-   initScreens(8,960,150);
+   screenspos = [];
+   initScreens(11,960,150);
 
     // function getRndColor() {
     //     var r = 255*Math.random()|0,
@@ -35,6 +36,7 @@ function initScreens(number, w, h) {
         ctxs[i] = screens[i].getContext();
         ctxs[i].drawImage(img, 0,150*i,960,150,0,0,960,150)
         screens[i].updateTexture();
+        screenspos[i] = document.querySelector("#screen"+i);
     }
     // body...
 }
@@ -55,13 +57,18 @@ function initSockets(){
 }
 
 
-var screenpos1 = document.querySelector('#screen1');
-function setPos (x,y,z) {
-  screenpos1.setAttribute('position', {
+function setPos (screen,x,y,z) {
+  screenspos[screen].setAttribute('position', {
     x: x,
     y: y,
     z: z
   });
 }
 
+function randomPos(){
+    for (var i = screens.length - 1; i >= 0; i--) {
+        setPos(i, Math.random(), -i*1.5, -1)
+    }
+
+}
 
